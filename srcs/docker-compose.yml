@@ -1,7 +1,8 @@
 version: '3'
 services:
   nginx:
-    command: tail -F "Hello"
     build: ./requirement/nginx/
+    restart: always
     ports:
-      - 3000:3000
+      - 443:443
+    # command: tail -f /dev/null

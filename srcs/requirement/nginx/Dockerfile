@@ -3,7 +3,11 @@ FROM debian:latest
 RUN apt update
 
 RUN apt install -y nginx openssl
-
 RUN mkdir /etc/nginx/ssl
 RUN chmod 700 /etc/nginx/ssl
-RUN openssl req -x509 -newkey rsa:4096 -keyout /etc/nginx/ssl/aomman.pem -out /etc/nginx/ssl/aomman.pem -sha256 -days 365 -nodes
+RUN mkdir -p /run/nginx
+
+RUN openssl req -x509 -newkey rsa:4096 -keyout /etc/nginx/ssl/aomman.key -out /etc/nginx/ssl/aomman.pem -days 365 -nodes -subj "/C=US/ST=State/L=City/O=Organization/CN=example.com"
+
+COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
+CMD [ "nginx", "-g", "daemon off;" ]
