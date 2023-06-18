@@ -7,7 +7,6 @@ RUN mkdir /etc/nginx/ssl
 RUN chmod 700 /etc/nginx/ssl
 RUN mkdir -p /run/nginx
 
-RUN openssl req -x509 -newkey rsa:4096 -keyout /etc/nginx/ssl/aomman.key -out /etc/nginx/ssl/aomman.pem -days 365 -nodes -subj "/C=US/ST=State/L=City/O=Organization/CN=example.com"
-
+RUN openssl req -x509 -newkey rsa:2048 -keyout /etc/nginx/ssl/aomman.key -out /etc/nginx/ssl/aomman.pem -days 365 -nodes -subj "/CN=aomman.42.fr"
 COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
 CMD [ "nginx", "-g", "daemon off;" ]
