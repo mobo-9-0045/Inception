@@ -2,24 +2,14 @@ FROM debian:latest
 
 RUN apt update
 
-RUN apt-get -y install \
-	wget \
-	curl \
-	bash \
-	php \
-	php-cgi \
-	php-mysql \
-	php-fpm \
-	php-pdo \
-	php-gd php-cli \
-	php-mbstring \
-	redis \
-	php-redis
+RUN apt-get -y install curl php php-redis php-fpm php-mysql mariadb-client php-curl php-gd php-json php-mbstring php-xml php-zip sendmail
 
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+	chmod +x wp-cli.phar && \
+	mv wp-cli.phar /usr/local/bin/wp
 
+COPY tools/wp.sh /wp.sh
 
-RUN wget https://wordpress.org/latest.tar.gz -P /var/www
+RUN chmod +x /wp.sh
 
-RUN cd /var/www/ && tar -xvf latest.tar.gz
-
-RUN chown -R root:root /var/www/wordpress
+CMD [ "/bin/bash", "wp.sh"]

@@ -8,3 +8,11 @@ services:
     # command: tail -f /dev/null
   wordpress:
     build: ./requirement/wordpress
+    restart: always
+    environment:
+      - .env
+  mariadb:
+    build: ./requirement/mariadb
+    restart: always
+    environment:
+      - .env
