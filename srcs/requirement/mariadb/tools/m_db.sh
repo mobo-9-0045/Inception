@@ -1,4 +1,3 @@
 #!/bin/bash
 
-service mariadb start
-
+service mysql start
