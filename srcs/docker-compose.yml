@@ -1,21 +1,43 @@
 version: '3'
 services:
   nginx:
+    container_name : nginx
     build: ./requirement/nginx/
     restart: always
     ports:
       - 443:443
     depends_on:
       - wordpress
+    volumes:
+      - www-data:/var/www/html/
   wordpress:
+    container_name : wordpress
     build: ./requirement/wordpress
     restart: always
     environment:
       - .env
     depends_on:
       - mariadb
+    volumes:
+      - www-data:/var/www/html/
   mariadb:
+    container_name : mariadb
     build: ./requirement/mariadb
     restart: always
     environment:
       - .env
+    volumes:
+      - mariadb_data:/var/lib/mysql/
+volumes:
+  mariadb_data :
+    driver : local
+    driver_opts :
+      device : /home/mobo/data/wordpress
+      o : bind
+      type : none
+  www-data :
+    driver : local
+    driver_opts :
+      device : /home/mobo/data/database
+      o : bind
+      type : none
