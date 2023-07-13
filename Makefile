@@ -19,5 +19,7 @@ down:
 up:
 	@docker-compose -f srcs/docker-compose.yml up --build
 
+fclean :
+	@docker volume rm -f $(docker volume ls -q) &> /dev/null ; true
 re : clean up
 
